@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <meta charset="utf-8">
+    <title>랜덤 좌석 배정 프로그램</title>
+  </head>
+  <body>
+  <!--Splash Screen code starts here-->
+  <div class="splash">
+    <h2 class="splash-header">8반 자리 배치 프로그램</h2>
+  </div>  
+  <!--Splash ends-->
+  
+<div id="container">
+  <h1>랜덤 좌석 배정 프로그램</h1>
+
+    <input type="text" id ="numOfPeople" placeholder="학생 수 입력">
+    <input type="button" class="button" id ="selected" name="random" value="좌석 배정"  onclick="
+      if(document.querySelector('#selected').value === '좌석 배정'){
+          input();
+          document.querySelector('#selected').value = '다시 하기';
+      } else {
+        input();
+      }
+  ">
+    <br>
+    <br>
+    <script type="text/javascript" src="makeTable.js"></script>
+    <script>
+      var seat = {};
+      var numOfPeople;
+
+      function input() {
+        var input = document.getElementById("numOfPeople").value;
+        numOfPeople = input;
+
+        //자리배정 인원 : 최소 2명 ~ 최대 100
+        if (numOfPeople == "") {
+          alert("인원을 입력하세요.");
+          history.back();
+        }
+        else if (numOfPeople < 2) {
+          alert("자리배정 인원은 최소 2명 이상이어야 합니다.");
+          history.back();
+        } else if(numOfPeople > 100) {
+          alert("자리배정은 최대 100명까지 가능합니다.");
+          history.back();
+        } else {
+          randomSeat(numOfPeople);
+        }
+      }
+
+      function randomSeat(num) {
+        var student = num;
+
+        var i = 0;
+        var j = 0;
+        var max = num;
+
+        for (i = 0; i < student; i++) {
+          // 1~20까지의 수를 랜덤하게 뽑음
+          seat[i] = Math.floor(Math.random() * max) + 1;
+          //Check the overlap
+          for (j = 0; j < i; j++) {
+            if (seat[i] == seat[j]) i--;
+          }
+        }
+        for (i = 0; i < student; i++) {
+          console.log(seat[i]);
+        }
+        makeTable(student, seat);
+      }
+
+    </script>
+    <br>
+
+  <div id="line1">
+      <script type="text/javascript">
+        document.write('<table>');
+            for (i = 0; i < 4; i++) {
+              document.write('<tr>');
+                for (j = 0; j < 2; j++) {
+                  document.write('<td>' + "O" + '</td>');
+                }
+              document.write('</tr>')
+            }
+         document.write('</table><br/>');
+      </script>
+    </div>
+
+    <div id="line2">
+      <script type="text/javascript">
+        document.write('<table>');
+            for (i = 4; i < 7; i++) {
+              document.write('<tr>');
+                for (j = 0; j < 2; j++) {
+                  document.write('<td>' + "O" + '</td>');
+                }
+              document.write('</tr>')
+            }
+         document.write('</table><br/>');
+      </script>
+    </div>
+
+    <div id="line3">
+      <script type="text/javascript">
+        document.write('<table>');
+            for (i = 7; i < 10; i++) {
+              document.write('<tr>');
+                for (j = 0; j < 2; j++) {
+                  document.write('<td>' + "O" + '</td>');
+                }
+              document.write('</tr>')
+            }
+         document.write('</table><br/>');
+      </script>
+    </div>
+</div>
+    
+
+  </body>
+</html>
